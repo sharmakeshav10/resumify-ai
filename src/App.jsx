@@ -10,14 +10,14 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/",
-        element: <LandingPage />,
-      },
-      {
         path: "/dash",
         element: <Dashboard />,
       },
     ],
+  },
+  {
+    path: "/",
+    element: <LandingPage />,
   },
   {
     path: "/auth/sign-in",
@@ -27,9 +27,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <div>
       <RouterProvider router={router} />
-    </>
+    </div>
   );
 }
 
