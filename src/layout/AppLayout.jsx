@@ -6,11 +6,11 @@ import { Navigate, Outlet, useNavigate } from "react-router-dom";
 const AppLayout = () => {
   const { user, isSignedIn, isLoaded } = useUser();
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
+  // if (!isLoaded) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!isSignedIn) {
+  if (!isSignedIn && isLoaded) {
     return <Navigate to={"/auth/sign-in"} />;
   }
 
