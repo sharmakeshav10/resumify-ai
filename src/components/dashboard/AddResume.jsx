@@ -13,6 +13,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import ApiService from "@/service/ApiService";
 import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -20,6 +21,7 @@ const AddResume = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const createResume = async (e) => {
     setIsLoading(true);
@@ -37,9 +39,10 @@ const AddResume = () => {
 
     try {
       const response = await ApiService.CreateNewResume(data);
-      console.log(response);
+      console.log(response.data.data.documentId);
       if (response) {
         setIsLoading(false);
+        navigate(`/dashboard/resume/${response.data.data.documentId}/edit`);
       }
     } catch (e) {
       console.log("Cannot create resume due to: ", e);
