@@ -1,4 +1,5 @@
 import Header from "@/components/common/Header";
+import { Toaster } from "@/components/ui/toaster";
 import { useUser } from "@clerk/clerk-react";
 import React from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ const AppLayout = () => {
     <div className="bg-gradient-to-b from-teal-50 to-white">
       <Header />
       <Outlet />
+      <Toaster />
     </div>
   );
 };

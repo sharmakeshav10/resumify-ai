@@ -6,7 +6,7 @@ import { ResumeProvider } from "@/context/ResumeContext";
 const EditResume = () => {
   return (
     <ResumeProvider>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-8">
         {/* resume form section */}
         <ResumeForm />
 
