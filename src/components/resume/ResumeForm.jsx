@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PersonalDetailsForm } from "./form/PersonalDetailsForm";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
+import SummaryForm from "./form/SummaryForm";
 
 const ResumeForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -48,9 +49,9 @@ const ResumeForm = () => {
       {/* personal details */}
       {activeIndex === 0 ? (
         <PersonalDetailsForm enabledNext={(value) => setEnableNextBtn(value)} />
+      ) : activeIndex === 1 ? (
+        <SummaryForm enabledNext={(value) => setEnableNextBtn(value)} />
       ) : null}
-
-      {/* summary */}
 
       {/* experience */}
 
