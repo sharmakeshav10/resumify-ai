@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import SummaryForm from "./form/SummaryForm";
 import ExperienceForm from "./form/ExperienceForm";
+import EducationForm from "./form/EducationForm";
 
 const ResumeForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -54,6 +55,8 @@ const ResumeForm = () => {
         <SummaryForm enabledNext={(value) => setEnableNextBtn(value)} />
       ) : activeIndex === 2 ? (
         <ExperienceForm enabledNext={(value) => setEnableNextBtn(value)} />
+      ) : activeIndex === 3 ? (
+        <EducationForm enabledNext={(value) => setEnableNextBtn(value)} />
       ) : null}
 
       {/* experience */}
