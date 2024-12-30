@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useResume } from "@/context/ResumeContext";
-import { Minus, Plus } from "lucide-react";
+import ApiService from "@/service/ApiService";
+import { Loader, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast, useToast } from "@/hooks/use-toast";
 
 const experienceFormData = {
   title: "",
@@ -16,9 +19,13 @@ const experienceFormData = {
   workSummary: "",
 };
 
-const ExperienceForm = () => {
+const ExperienceForm = ({ enabledNext }) => {
   const [experienceList, setExperienceList] = useState([experienceFormData]);
   const { resumeInfo, updateResume } = useResume();
+  const [isLoading, setIsLoading] = useState(false);
+  const { resumeId } = useParams();
+
+  const { toast } = useToast();
 
   const handleInputChange = (index, e) => {
     const newEntries = experienceList.slice(); //create new array with same values
@@ -45,15 +52,44 @@ const ExperienceForm = () => {
     setExperienceList(newEntries);
   };
 
+  const handleSaveExperience = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const data = {
+        data: {
+          experience: experienceList.map(({ id, ...rest }) => rest),
+        },
+      };
+
+      console.log("DATAAAAA ", data);
+
+      const response = await ApiService.updateResumeDetails(data, resumeId);
+      if (response) {
+        console.log(response);
+        enabledNext(true);
+        setIsLoading(false);
+        toast({
+          variant: "success",
+          description: "Experience updated successfully!",
+        });
+      }
+    } catch (e) {
+      console.log("Could not update the expereince:", e);
+
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    console.log(experienceList);
+    // console.log(experienceList);
     if (resumeInfo && resumeInfo?.experience) {
       updateResume({
         ...resumeInfo,
         experience: experienceList,
       });
     }
-  }, [experienceList, resumeInfo]);
+  }, [experienceList]);
 
   return (
     <div className="border shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
@@ -62,101 +98,105 @@ const ExperienceForm = () => {
         Add details about your previous roles
       </p>
 
-      <div className="mt-6">
-        {experienceList.map((exp, index) => (
-          <div key={index}>
-            <div className="grid grid-cols-2 gap-4 border p-3 my-5 rounded-lg">
-              <div>
-                <Label className="text-xs">Position Title</Label>
-                <Input
-                  name="title"
-                  className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </div>
-              <div>
-                <Label className="text-xs">Company Name</Label>
-                <Input
-                  name="companyName"
-                  className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </div>
-              <div>
-                <Label className="text-xs">City</Label>
-                <Input
-                  name="city"
-                  className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </div>
-              <div>
-                <Label className="text-xs">State</Label>
-                <Input
-                  name="state"
-                  className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </div>
-              <div>
-                <Label className="text-xs">Start Date</Label>
-                <Input
-                  name="startDate"
-                  type="date"
-                  className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </div>
-              <div>
-                <Label className="text-xs">End Date</Label>
-                <Input
-                  type="date"
-                  name="endDate"
-                  className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </div>
-              <div className="col-span-2">
-                <RichTextEditor
-                  onRichTextEditorChange={(e) =>
-                    handleRichTextEditorChange(e, "workSummary", index)
-                  }
-                />
+      <form onSubmit={handleSaveExperience}>
+        <div className="mt-6">
+          {experienceList.map((exp, index) => (
+            <div key={index}>
+              <div className="grid grid-cols-2 gap-4 border p-3 my-5 rounded-lg">
+                <div>
+                  <Label className="text-xs">Position Title</Label>
+                  <Input
+                    name="title"
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Company Name</Label>
+                  <Input
+                    name="companyName"
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">City</Label>
+                  <Input
+                    name="city"
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">State</Label>
+                  <Input
+                    name="state"
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Start Date</Label>
+                  <Input
+                    name="startDate"
+                    type="date"
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">End Date</Label>
+                  <Input
+                    type="date"
+                    name="endDate"
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                </div>
+                <div className="col-span-2">
+                  <RichTextEditor
+                    index={index}
+                    onRichTextEditorChange={(e) =>
+                      handleRichTextEditorChange(e, "workSummary", index)
+                    }
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
 
-        <div className="flex justify-between">
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={addNewWorkExperience}
-              className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
-            >
-              <Plus /> Add a Work Experience
-            </Button>
-            {experienceList.length > 1 && (
+          <div className="flex justify-between">
+            <div className="flex gap-2">
               <Button
                 variant="outline"
-                onClick={removeWorkExperience}
+                type="button"
+                onClick={addNewWorkExperience}
                 className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
               >
-                <Minus /> Remove
+                <Plus /> Add a Work Experience
               </Button>
-            )}
-          </div>
+              {experienceList.length > 1 && (
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={removeWorkExperience}
+                  className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
+                >
+                  <Minus /> Remove
+                </Button>
+              )}
+            </div>
 
-          <Button
-            // disabled={isLoading}
-            type="submit"
-            className="bg-teal-600 text-white hover:bg-teal-700 focus:ring-4 focus:ring-teal-300"
-          >
-            {/* {isLoading ? <Loader /> : "Save"} */}
-            Save
-          </Button>
+            <Button
+              disabled={isLoading}
+              type="submit"
+              className="bg-teal-600 text-white hover:bg-teal-700 focus:ring-4 focus:ring-teal-300"
+            >
+              {isLoading ? <Loader /> : "Save"}
+            </Button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
