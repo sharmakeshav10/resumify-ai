@@ -70,42 +70,34 @@ export default {
     {
       id: 1,
       name: "Angular",
-      rating: 80,
     },
     {
       id: 2,
       name: "React",
-      rating: 100,
     },
     {
       id: 3,
       name: "MySql",
-      rating: 80,
     },
     {
       id: 4,
       name: "React Native",
-      rating: 100,
     },
     {
       id: 5,
       name: "Node.js",
-      rating: 85,
     },
     {
       id: 6,
       name: "Vue.js",
-      rating: 70,
     },
     {
       id: 7,
       name: "TypeScript",
-      rating: 90,
     },
     {
       id: 8,
       name: "Docker",
-      rating: 75,
     },
   ],
 };
