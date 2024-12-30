@@ -9,7 +9,10 @@ export const ResumeProvider = ({ children }) => {
   const [resumeInfo, setResumeInfo] = useState(dummy);
 
   const updateResume = (newResumeInfo) => {
-    setResumeInfo(newResumeInfo);
+    setResumeInfo((prevState) => ({
+      ...prevState,
+      ...newResumeInfo,
+    }));
   };
 
   return (

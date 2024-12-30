@@ -18,12 +18,12 @@ export default {
       startDate: "Jan 2021",
       endDate: "",
       currentlyWorking: true,
-      workSummery:
-        " Designed, developed, and maintained full-stack applications using React and Node.js.\n" +
+      workSummary:
+        "Designed, developed, and maintained full-stack applications using React and Node.js.\n" +
         "• Implemented responsive user interfaces with React, ensuring seamless user experiences across\n" +
         "various devices and browsers.\n" +
         "• Maintaining the React Native in-house organization application." +
-        "• CreatedRESTfulAPIs withNode.js and Express,facilitating data communicationbetween the front-end" +
+        "• Created RESTful APIs with Node.js and Express, facilitating data communication between the front-end" +
         "and back-end systems.",
     },
     {
@@ -35,12 +35,12 @@ export default {
       startDate: "May 2019",
       endDate: "Jan 2021",
       currentlyWorking: false,
-      workSummery:
-        " Designed, developed, and maintained full-stack applications using React and Node.js." +
+      workSummary:
+        "Designed, developed, and maintained full-stack applications using React and Node.js." +
         "• Implemented responsive user interfaces with React, ensuring seamless user experiences across" +
         "various devices and browsers." +
         "• Maintaining the React Native in-house organization application." +
-        "• CreatedRESTfulAPIs withNode.js and Express,facilitating data communicationbetween the front-end" +
+        "• Created RESTful APIs with Node.js and Express, facilitating data communication between the front-end" +
         "and back-end systems.",
     },
   ],
@@ -73,39 +73,39 @@ export default {
       rating: 80,
     },
     {
-      id: 1,
+      id: 2,
       name: "React",
       rating: 100,
     },
     {
-      id: 1,
+      id: 3,
       name: "MySql",
       rating: 80,
     },
     {
-      id: 1,
+      id: 4,
       name: "React Native",
       rating: 100,
     },
     {
-      id: 1,
-      name: "Angular",
-      rating: 80,
+      id: 5,
+      name: "Node.js",
+      rating: 85,
     },
     {
-      id: 1,
-      name: "React",
-      rating: 100,
+      id: 6,
+      name: "Vue.js",
+      rating: 70,
     },
     {
-      id: 1,
-      name: "MySql",
-      rating: 80,
+      id: 7,
+      name: "TypeScript",
+      rating: 90,
     },
     {
-      id: 1,
-      name: "React Native",
-      rating: 100,
+      id: 8,
+      name: "Docker",
+      rating: 75,
     },
   ],
 };
