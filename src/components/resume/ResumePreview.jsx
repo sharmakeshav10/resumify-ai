@@ -8,22 +8,30 @@ import SkillsPreview from "./preview/SkillsPreview";
 
 const ResumePreview = () => {
   const { resumeInfo } = useResume();
+  console.log("PREVIEW: ", resumeInfo);
+
   return (
     <div className="h-full border shadow-lg p-14">
-      {/* personal details */}
-      <PersonalDetailsPreview resumeInfo={resumeInfo} />
+      {resumeInfo ? (
+        <>
+          {/* personal details */}
+          <PersonalDetailsPreview resumeInfo={resumeInfo} />
 
-      {/* summary preview */}
-      <SummaryPreview resumeInfo={resumeInfo} />
+          {/* summary preview */}
+          <SummaryPreview resumeInfo={resumeInfo} />
 
-      {/* experience preview */}
-      <ExperiencePreview resumeInfo={resumeInfo} />
+          {/* experience preview */}
+          <ExperiencePreview resumeInfo={resumeInfo} />
 
-      {/* educaion preview */}
-      <EducationPreview resumeInfo={resumeInfo} />
+          {/* educaion preview */}
+          <EducationPreview resumeInfo={resumeInfo} />
 
-      {/* skills preview */}
-      <SkillsPreview resumeInfo={resumeInfo} />
+          {/* skills preview */}
+          <SkillsPreview resumeInfo={resumeInfo} />
+        </>
+      ) : (
+        "No resume data"
+      )}
     </div>
   );
 };

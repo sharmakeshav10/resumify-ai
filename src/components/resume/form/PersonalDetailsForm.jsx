@@ -5,12 +5,19 @@ import { useResume } from "@/context/ResumeContext";
 import { toast, useToast } from "@/hooks/use-toast";
 import ApiService from "@/service/ApiService";
 import { Loader } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export const PersonalDetailsForm = ({ enabledNext }) => {
   const { resumeInfo, updateResume } = useResume();
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    jobTitle: "",
+    address: "",
+    phone: "",
+    email: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -58,6 +65,19 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
     }
   };
 
+  useEffect(() => {
+    if (resumeInfo) {
+      setFormData({
+        firstName: resumeInfo.firstName || "",
+        lastName: resumeInfo.lastName || "",
+        jobTitle: resumeInfo.jobTitle || "",
+        address: resumeInfo.address || "",
+        phone: resumeInfo.phone || "",
+        email: resumeInfo.email || "",
+      });
+    }
+  }, [resumeInfo]);
+
   return (
     <div className="border shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
       <h2 className="font-bold text-2xl ">Personal Details</h2>
@@ -71,7 +91,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             <Label className="text-sm">First Name</Label>
             <Input
               name="firstName"
-              defaultValue={resumeInfo?.firstName}
+              value={resumeInfo?.firstName}
               className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
               required
               onChange={handleInputChange}
@@ -81,7 +101,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             <Label className="text-sm">Last Name</Label>
             <Input
               name="lastName"
-              defaultValue={resumeInfo?.lastName}
+              value={resumeInfo?.lastName}
               className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
               required
               onChange={handleInputChange}
@@ -91,7 +111,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             <Label className="text-sm">Job Title</Label>
             <Input
               name="jobTitle"
-              defaultValue={resumeInfo?.jobTitle}
+              value={resumeInfo?.jobTitle}
               className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
               required
               onChange={handleInputChange}
@@ -101,7 +121,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             <Label className="text-sm">Address</Label>
             <Input
               name="address"
-              defaultValue={resumeInfo?.address}
+              value={resumeInfo?.address}
               className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
               required
               onChange={handleInputChange}
@@ -111,7 +131,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             <Label className="text-sm">Phone</Label>
             <Input
               name="phone"
-              defaultValue={resumeInfo?.phone}
+              value={resumeInfo?.phone}
               className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
               required
               onChange={handleInputChange}
@@ -121,7 +141,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             <Label className="text-sm">Email</Label>
             <Input
               name="email"
-              defaultValue={resumeInfo?.email}
+              value={resumeInfo?.email}
               className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
               required
               onChange={handleInputChange}

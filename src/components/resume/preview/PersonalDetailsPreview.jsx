@@ -2,11 +2,12 @@ import { Mail, PhoneCall } from "lucide-react";
 import React from "react";
 
 const PersonalDetailsPreview = ({ resumeInfo }) => {
+  console.log("PDR: ", resumeInfo);
   return (
     <div className="">
       {/* name */}
       <h2 className="text-center font-bold">
-        {resumeInfo?.firstName} {resumeInfo.lastName}
+        {resumeInfo?.firstName} {resumeInfo?.lastName}
       </h2>
       {/* title */}
       <h2

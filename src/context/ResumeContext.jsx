@@ -6,7 +6,7 @@ import { createContext } from "react";
 const ResumeContext = createContext(null);
 
 export const ResumeProvider = ({ children }) => {
-  const [resumeInfo, setResumeInfo] = useState(dummy);
+  const [resumeInfo, setResumeInfo] = useState();
 
   const updateResume = (newResumeInfo) => {
     setResumeInfo((prevState) => ({
