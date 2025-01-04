@@ -28,6 +28,10 @@ const EducationForm = ({ enabledNext }) => {
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    resumeInfo?.education.length > 0 && setEducationList(resumeInfo?.education);
+  }, []);
+
   const handleInputChange = (index, e) => {
     const newEntries = educationList.slice(); //create new array with same values
     const { name, value } = e.target;
@@ -100,6 +104,7 @@ const EducationForm = ({ enabledNext }) => {
                   <Label className="text-xs">University Name</Label>
                   <Input
                     name="universityName"
+                    value={edu?.universityName}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -108,6 +113,7 @@ const EducationForm = ({ enabledNext }) => {
                   <Label className="text-xs">Degree</Label>
                   <Input
                     name="degree"
+                    value={edu?.degree}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -116,6 +122,7 @@ const EducationForm = ({ enabledNext }) => {
                   <Label className="text-xs">Major</Label>
                   <Input
                     name="major"
+                    value={edu?.major}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -125,6 +132,7 @@ const EducationForm = ({ enabledNext }) => {
                   <Input
                     type="date"
                     name="startDate"
+                    value={edu?.startDate}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -134,6 +142,7 @@ const EducationForm = ({ enabledNext }) => {
                   <Input
                     name="endDate"
                     type="date"
+                    value={edu?.endDate}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -142,6 +151,7 @@ const EducationForm = ({ enabledNext }) => {
                   <Label className="text-xs">Description</Label>
                   <Textarea
                     name="description"
+                    value={edu?.description}
                     onChange={(e) => handleInputChange(index, e)}
                     className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600 mt-5"
                   />

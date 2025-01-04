@@ -10,7 +10,7 @@ import SkillsForm from "./form/SkillsForm";
 const ResumeForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [enableNextBtn, setEnableNextBtn] = useState(false);
+  const [enableNextBtn, setEnableNextBtn] = useState(true);
 
   const handleNextButton = () => {
     setActiveIndex(activeIndex + 1);

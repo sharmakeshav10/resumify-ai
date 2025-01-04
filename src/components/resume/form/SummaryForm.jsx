@@ -114,7 +114,7 @@ const SummaryForm = ({ enabledNext }) => {
         </form>
       </div>
 
-      {aiSummary && (
+      {aiSummary && aiSummary.length > 0 && (
         <div className="my-5">
           <h2 className="font-bold text-lg">Suggestions</h2>
           {aiSummary?.map((item, index) => (

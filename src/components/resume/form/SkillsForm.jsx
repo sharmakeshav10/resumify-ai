@@ -21,6 +21,10 @@ const SkillsForm = () => {
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    resumeInfo?.skills.length > 0 && setSkillsList(resumeInfo?.skills);
+  }, []);
+
   const handleInputChange = (index, e) => {
     const newEntries = skillsList.slice(); //create new array with same values
     const { name, value } = e.target;
@@ -94,6 +98,7 @@ const SkillsForm = () => {
                   <Label className="text-xs">Skills</Label>
                   <Input
                     name="name"
+                    value={skill?.name}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />

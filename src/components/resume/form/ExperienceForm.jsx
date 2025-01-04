@@ -27,6 +27,11 @@ const ExperienceForm = ({ enabledNext }) => {
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    resumeInfo?.experience.length > 0 &&
+      setExperienceList(resumeInfo?.experience);
+  }, []);
+
   const handleInputChange = (index, e) => {
     const newEntries = experienceList.slice(); //create new array with same values
     const { name, value } = e.target;
@@ -107,6 +112,7 @@ const ExperienceForm = ({ enabledNext }) => {
                   <Label className="text-xs">Position Title</Label>
                   <Input
                     name="title"
+                    value={exp?.title}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -115,6 +121,7 @@ const ExperienceForm = ({ enabledNext }) => {
                   <Label className="text-xs">Company Name</Label>
                   <Input
                     name="companyName"
+                    value={exp?.companyName}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -123,6 +130,7 @@ const ExperienceForm = ({ enabledNext }) => {
                   <Label className="text-xs">City</Label>
                   <Input
                     name="city"
+                    value={exp?.city}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -131,6 +139,7 @@ const ExperienceForm = ({ enabledNext }) => {
                   <Label className="text-xs">State</Label>
                   <Input
                     name="state"
+                    value={exp?.state}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -140,6 +149,7 @@ const ExperienceForm = ({ enabledNext }) => {
                   <Input
                     name="startDate"
                     type="date"
+                    value={exp?.startDate}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -149,6 +159,7 @@ const ExperienceForm = ({ enabledNext }) => {
                   <Input
                     type="date"
                     name="endDate"
+                    value={exp?.endDate}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
@@ -156,6 +167,7 @@ const ExperienceForm = ({ enabledNext }) => {
                 <div className="col-span-2">
                   <RichTextEditor
                     index={index}
+                    defaultValue={exp?.workSummary}
                     onRichTextEditorChange={(e) =>
                       handleRichTextEditorChange(e, "workSummary", index)
                     }
