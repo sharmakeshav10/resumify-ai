@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import SignInPage from "./auth/sign-in/SignIn";
 import EditResume from "./components/dashboard/EditResume";
+import UserResumeView from "./pages/UserResumeView";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/resume/:resumeId/edit",
         element: <EditResume />,
+      },
+      {
+        path: "/my-resume/:resumeId/view",
+        element: <UserResumeView />,
       },
     ],
   },

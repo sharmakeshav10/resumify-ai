@@ -6,9 +6,12 @@ import SummaryForm from "./form/SummaryForm";
 import ExperienceForm from "./form/ExperienceForm";
 import EducationForm from "./form/EducationForm";
 import SkillsForm from "./form/SkillsForm";
+import UserResumeView from "@/pages/UserResumeView";
+import { Navigate, useParams } from "react-router-dom";
 
 const ResumeForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { resumeId } = useParams();
 
   const [enableNextBtn, setEnableNextBtn] = useState(true);
 
@@ -58,9 +61,11 @@ const ResumeForm = () => {
         <ExperienceForm enabledNext={(value) => setEnableNextBtn(value)} />
       ) : activeIndex === 3 ? (
         <EducationForm enabledNext={(value) => setEnableNextBtn(value)} />
-      ) : (
+      ) : activeIndex === 4 ? (
         <SkillsForm />
-      )}
+      ) : activeIndex === 5 ? (
+        <Navigate to={`/my-resume/${resumeId}/view`} />
+      ) : null}
 
       {/* experience */}
 
