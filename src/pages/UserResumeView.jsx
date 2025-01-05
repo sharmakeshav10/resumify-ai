@@ -6,6 +6,7 @@ import { useUser } from "@clerk/clerk-react";
 import html2pdf from "html2pdf.js";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { RWebShare } from "react-web-share";
 
 const UserResumeView = () => {
   const { resumeId } = useParams();
@@ -71,9 +72,22 @@ const UserResumeView = () => {
           >
             Download Resume
           </Button>
-          <Button className="w-1/3 py-3 bg-teal-600 text-white rounded-lg text-lg font-semibold hover:bg-teal-700 transition duration-300">
-            Share Resume
-          </Button>
+          <RWebShare
+            data={{
+              text: "Thankyou for viewing my resume!",
+              url:
+                import.meta.env.VITE_BASE_URL +
+                "/my-resume/" +
+                resumeId +
+                "/view",
+              title: `${user?.firstName}_resume`,
+            }}
+            onClick={() => console.log("shared successfully!")}
+          >
+            <Button className="w-1/3 py-3 bg-teal-600 text-white rounded-lg text-lg font-semibold hover:bg-teal-700 transition duration-300">
+              Share Resume
+            </Button>
+          </RWebShare>
         </div>
 
         {/* Resume Preview Section */}
