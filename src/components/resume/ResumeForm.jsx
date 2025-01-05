@@ -62,7 +62,7 @@ const ResumeForm = () => {
       ) : activeIndex === 3 ? (
         <EducationForm enabledNext={(value) => setEnableNextBtn(value)} />
       ) : activeIndex === 4 ? (
-        <SkillsForm />
+        <SkillsForm enabledNext={(value) => setEnableNextBtn(value)} />
       ) : activeIndex === 5 ? (
         <Navigate to={`/my-resume/${resumeId}/view`} />
       ) : null}

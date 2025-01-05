@@ -12,13 +12,11 @@ const skillsFormData = {
   name: "",
 };
 
-const SkillsForm = () => {
+const SkillsForm = ({ enabledNext }) => {
   const [skillsList, setSkillsList] = useState([skillsFormData]);
-  const [isLoading, setIsLoading] = useState(false);
   const { resumeInfo, updateResume } = useResume();
-
+  const [isLoading, setIsLoading] = useState(false);
   const { resumeId } = useParams();
-
   const { toast } = useToast();
 
   useEffect(() => {
@@ -26,7 +24,8 @@ const SkillsForm = () => {
   }, []);
 
   const handleInputChange = (index, e) => {
-    const newEntries = skillsList.slice(); //create new array with same values
+    enabledNext(false);
+    const newEntries = [...skillsList];
     const { name, value } = e.target;
     console.log(e.target.value);
 
@@ -36,7 +35,7 @@ const SkillsForm = () => {
   };
 
   const addNewSkills = () => {
-    setSkillsList([...skillsList, skillsFormData]);
+    setSkillsList([...skillsList, { ...skillsFormData }]);
   };
 
   const removeSkills = () => {
@@ -46,7 +45,7 @@ const SkillsForm = () => {
     }
   };
 
-  const saveSkills = async (e) => {
+  const handleSaveSkills = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -56,21 +55,17 @@ const SkillsForm = () => {
         },
       };
 
-      console.log("DATAAAAA ", data);
-
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log(response);
-        // enabledNext(true);
         setIsLoading(false);
+        enabledNext(true);
         toast({
           variant: "success",
-          description: "Experience updated successfully!",
+          description: "Skills updated successfully!",
         });
       }
     } catch (e) {
-      console.log("Could not update the expereince:", e);
-
+      console.log("Could not update skills:", e);
       setIsLoading(false);
     }
   };
@@ -89,7 +84,7 @@ const SkillsForm = () => {
       <h2 className="font-bold text-2xl ">Skills</h2>
       <p className="font-semibold text-lg  mt-1">Add your skills</p>
 
-      <form onSubmit={saveSkills}>
+      <form onSubmit={handleSaveSkills}>
         <div className="mt-6">
           {skillsList.map((skill, index) => (
             <div key={index}>

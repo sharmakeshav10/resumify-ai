@@ -24,23 +24,24 @@ const ExperienceForm = ({ enabledNext }) => {
   const { resumeInfo, updateResume } = useResume();
   const [isLoading, setIsLoading] = useState(false);
   const { resumeId } = useParams();
-
   const { toast } = useToast();
 
   useEffect(() => {
-    resumeInfo?.experience.length > 0 &&
+    if (resumeInfo?.experience && resumeInfo?.experience.length > 0) {
       setExperienceList(resumeInfo?.experience);
+    }
   }, []);
 
   const handleInputChange = (index, e) => {
-    const newEntries = experienceList.slice(); //create new array with same values
+    enabledNext(false);
+    const newEntries = [...experienceList]; //create new array with same values
     const { name, value } = e.target;
     newEntries[index][name] = value;
     setExperienceList(newEntries);
   };
 
   const addNewWorkExperience = () => {
-    setExperienceList([...experienceList, experienceFormData]);
+    setExperienceList([...experienceList, { ...experienceFormData }]); // Ensure a new empty form is added
   };
 
   const removeWorkExperience = () => {
@@ -51,7 +52,8 @@ const ExperienceForm = ({ enabledNext }) => {
   };
 
   const handleRichTextEditorChange = (e, name, index) => {
-    const newEntries = experienceList.slice(); //create new array with same values
+    enabledNext(false);
+    const newEntries = [...experienceList]; //create new array with same values
     const { value } = e.target;
     newEntries[index][name] = value;
     setExperienceList(newEntries);
@@ -63,15 +65,15 @@ const ExperienceForm = ({ enabledNext }) => {
     try {
       const data = {
         data: {
-          experience: experienceList.map(({ id, ...rest }) => rest),
+          experience: experienceList.map(({ id, ...rest }) => rest), // Map without the 'id' field
         },
       };
 
-      console.log("DATAAAAA ", data);
+      console.log("Saving data: ", data);
 
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log(response);
+        console.log("Experience saved successfully:", response);
         enabledNext(true);
         setIsLoading(false);
         toast({
@@ -80,8 +82,7 @@ const ExperienceForm = ({ enabledNext }) => {
         });
       }
     } catch (e) {
-      console.log("Could not update the expereince:", e);
-
+      console.log("Could not update the experience:", e);
       setIsLoading(false);
     }
   };
@@ -108,6 +109,7 @@ const ExperienceForm = ({ enabledNext }) => {
           {experienceList.map((exp, index) => (
             <div key={index}>
               <div className="grid grid-cols-2 gap-4 border p-3 my-5 rounded-lg">
+                {/* Position Title */}
                 <div>
                   <Label className="text-xs">Position Title</Label>
                   <Input
@@ -117,6 +119,8 @@ const ExperienceForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* Company Name */}
                 <div>
                   <Label className="text-xs">Company Name</Label>
                   <Input
@@ -126,6 +130,8 @@ const ExperienceForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* City */}
                 <div>
                   <Label className="text-xs">City</Label>
                   <Input
@@ -135,6 +141,8 @@ const ExperienceForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* State */}
                 <div>
                   <Label className="text-xs">State</Label>
                   <Input
@@ -144,6 +152,8 @@ const ExperienceForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* Start Date */}
                 <div>
                   <Label className="text-xs">Start Date</Label>
                   <Input
@@ -154,6 +164,8 @@ const ExperienceForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* End Date */}
                 <div>
                   <Label className="text-xs">End Date</Label>
                   <Input
@@ -164,6 +176,8 @@ const ExperienceForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* Work Summary (Rich Text Editor) */}
                 <div className="col-span-2">
                   <RichTextEditor
                     index={index}

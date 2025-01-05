@@ -14,7 +14,7 @@ const PersonalDetailsPreview = ({ resumeInfo }) => {
         className="text-center font-medium"
         style={{ color: resumeInfo?.themeColor }}
       >
-        {resumeInfo?.jobTitle.toUpperCase()}
+        {resumeInfo?.jobTitle?.toUpperCase()}
       </h2>
       {/* address */}
       <h2 className="text-center text-xs">{resumeInfo?.address}</h2>

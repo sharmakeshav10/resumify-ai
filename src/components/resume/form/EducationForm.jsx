@@ -1,51 +1,50 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useResume } from "@/context/ResumeContext";
+import { useToast } from "@/hooks/use-toast";
 import ApiService from "@/service/ApiService";
 import { Loader, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 
 const educationFormData = {
   universityName: "",
   degree: "",
   major: "",
-  description: "",
   startDate: "",
   endDate: "",
+  description: "",
 };
 
 const EducationForm = ({ enabledNext }) => {
   const [educationList, setEducationList] = useState([educationFormData]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { resumeId } = useParams();
-
   const { resumeInfo, updateResume } = useResume();
-
+  const [isLoading, setIsLoading] = useState(false);
+  const { resumeId } = useParams();
   const { toast } = useToast();
 
   useEffect(() => {
-    resumeInfo?.education.length > 0 && setEducationList(resumeInfo?.education);
+    if (resumeInfo?.education && resumeInfo?.education.length > 0) {
+      setEducationList(resumeInfo?.education);
+    }
   }, []);
 
   const handleInputChange = (index, e) => {
-    const newEntries = educationList.slice(); //create new array with same values
+    enabledNext(false);
+    const newEntries = [...educationList];
     const { name, value } = e.target;
     newEntries[index][name] = value;
     setEducationList(newEntries);
   };
 
   const addNewEducation = () => {
-    setEducationList([...educationList, educationFormData]);
+    setEducationList([...educationList, { ...educationFormData }]);
   };
 
-  const removeNewEducation = () => {
+  const removeEducation = () => {
     if (educationList.length > 1) {
-      setEducationList((education) => education.slice(0, -1));
+      setEducationList(educationList.slice(0, -1));
     }
   };
 
@@ -59,28 +58,23 @@ const EducationForm = ({ enabledNext }) => {
         },
       };
 
-      console.log("DATAAAAA ", data);
-
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log(response);
-        enabledNext(true);
         setIsLoading(false);
+        enabledNext(true);
         toast({
           variant: "success",
-          description: "Education details updated successfully!",
+          description: "Education updated successfully!",
         });
       }
     } catch (e) {
-      console.log("Could not update the expereince:", e);
-
+      console.log("Could not update education:", e);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    // console.log(experienceList);
-    if (resumeInfo && resumeInfo?.education) {
+    if (resumeInfo) {
       updateResume({
         ...resumeInfo,
         education: educationList,
@@ -90,9 +84,9 @@ const EducationForm = ({ enabledNext }) => {
 
   return (
     <div className="border shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
-      <h2 className="font-bold text-2xl ">Education Details</h2>
-      <p className="font-semibold text-lg  mt-1">
-        Please fill your education details
+      <h2 className="font-bold text-2xl">Education</h2>
+      <p className="font-semibold text-lg mt-1">
+        Add details about your education
       </p>
 
       <form onSubmit={handleSaveEducation}>
@@ -118,6 +112,8 @@ const EducationForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* School */}
                 <div>
                   <Label className="text-xs">Major</Label>
                   <Input
@@ -127,16 +123,20 @@ const EducationForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* Start Date */}
                 <div>
                   <Label className="text-xs">Start Date</Label>
                   <Input
-                    type="date"
                     name="startDate"
+                    type="date"
                     value={edu?.startDate}
                     className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* End Date */}
                 <div>
                   <Label className="text-xs">End Date</Label>
                   <Input
@@ -147,13 +147,15 @@ const EducationForm = ({ enabledNext }) => {
                     onChange={(e) => handleInputChange(index, e)}
                   />
                 </div>
+
+                {/* Description */}
                 <div className="col-span-2">
                   <Label className="text-xs">Description</Label>
-                  <Textarea
+                  <Input
                     name="description"
                     value={edu?.description}
+                    className="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600"
                     onChange={(e) => handleInputChange(index, e)}
-                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600 mt-5"
                   />
                 </div>
               </div>
@@ -168,13 +170,13 @@ const EducationForm = ({ enabledNext }) => {
                 onClick={addNewEducation}
                 className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
               >
-                <Plus /> Add New Education
+                <Plus /> Add Education
               </Button>
               {educationList.length > 1 && (
                 <Button
                   variant="outline"
                   type="button"
-                  onClick={removeNewEducation}
+                  onClick={removeEducation}
                   className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
                 >
                   <Minus /> Remove

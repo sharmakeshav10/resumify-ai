@@ -36,38 +36,44 @@ const Dashboard = () => {
   }, [user]);
 
   return (
-    <div className="px-8">
-      <h1 className="text-3xl font-bold my-6">My Resumes</h1>
+    <div className="px-8 py-6 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold text-teal-600 my-6">My Resumes</h1>
 
       {/* Add Resume Section - Always visible */}
-      <AddResume />
+      <div className="mb-6">
+        <AddResume />
+      </div>
 
       {/* Loader */}
       {isLoading && !hasError && (
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex justify-center items-center mb-8">
           <Loader2 className="animate-spin text-teal-500" size={48} />
         </div>
       )}
 
       {/* Error Fallback UI */}
       {hasError && !isLoading && (
-        <div className="flex justify-center items-center text-red-600 mb-4">
+        <div className="flex justify-center items-center text-red-600 mb-8">
           <p>Oops! Something went wrong while fetching your resumes.</p>
         </div>
       )}
 
       {/* If no resumes found */}
       {!isLoading && !hasError && resumeList.length === 0 && (
-        <div className="flex justify-center items-center text-gray-600 mb-4">
+        <div className="flex justify-center items-center text-gray-600 mb-8">
           <p>You haven't added any resumes yet. Please add one!</p>
         </div>
       )}
 
       {/* Show resumes if they are available */}
       {!isLoading && !hasError && resumeList.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {resumeList.map((resume) => (
-            <ResumeCard key={resume.resumeId} resume={resume} />
+            <ResumeCard
+              key={resume.resumeId}
+              resume={resume}
+              refreshResumeList={getResumeList}
+            />
           ))}
         </div>
       )}

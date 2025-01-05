@@ -3,38 +3,54 @@ import { Textarea } from "@/components/ui/textarea";
 import { useResume } from "@/context/ResumeContext";
 import ApiService from "@/service/ApiService";
 import { Loader, Sparkles } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast, useToast } from "@/hooks/use-toast";
 import { chatSession } from "@/service/AiService";
 
 const prompt =
-  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format";
+  "Job Title: {jobTitle} , Depends on job title give me list of  summary for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format";
 
 const SummaryForm = ({ enabledNext }) => {
   const { resumeInfo, updateResume } = useResume();
   const [isLoading, setIsLoading] = useState(false);
-  const [summary, setSummary] = useState("");
+  const [summary, setSummary] = useState();
   const [aiSummary, setAiSummary] = useState();
   const { resumeId } = useParams();
 
   const { toast } = useToast();
 
+  useEffect(() => {
+    summary &&
+      updateResume({
+        ...resumeInfo,
+        summary: summary,
+      });
+  }, [summary]);
+
   const aiGeneratedSummary = async () => {
     setIsLoading(true);
     try {
-      const PROMPT = prompt.replace("jobTitle", resumeInfo?.jobTitle);
+      const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
       const result = await chatSession.sendMessage(PROMPT);
-      console.log("AI Response Text: ", result.response.text());
-      setAiSummary(JSON.parse(result.response.text()));
+
+      const responseText = result.response.text();
+      console.log("AI Response Text: ", responseText);
+
+      // Parse the response and access the 'summaries' array
+      const parsedResponse = JSON.parse(responseText);
+      console.log("Parsed AI Response: ", parsedResponse);
+
+      setAiSummary(parsedResponse);
       setIsLoading(false);
     } catch (e) {
-      console.log("AI couldnt generate summary due to: ", e);
+      console.log("AI couldn't generate summary due to: ", e);
       setIsLoading(false);
     }
   };
 
   const handleSummaryChange = (e) => {
+    enabledNext(false);
     console.log(e.target.value);
 
     setSummary(e.target.value);
@@ -98,7 +114,6 @@ const SummaryForm = ({ enabledNext }) => {
             required
             name="summary"
             value={summary}
-            defaultValue={summary ? summary : resumeInfo?.summary}
             className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-600 mt-5"
           />
 
