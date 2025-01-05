@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { PersonalDetailsForm } from "./form/PersonalDetailsForm";
 import { Button } from "../ui/button";
-import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, LayoutGrid } from "lucide-react";
 import SummaryForm from "./form/SummaryForm";
 import ExperienceForm from "./form/ExperienceForm";
 import EducationForm from "./form/EducationForm";
 import SkillsForm from "./form/SkillsForm";
 import UserResumeView from "@/pages/UserResumeView";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
+import ResumeTheme from "./ResumeTheme";
 
 const ResumeForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -27,12 +28,14 @@ const ResumeForm = () => {
     <div>
       {/* top control buttons */}
       <div className="flex items-center justify-between mb-8">
-        <Button
-          variant="outline"
-          className="border border-slate-400 bg-white text-slate-800 hover:shadow-md rounded mr-2 text-md"
-        >
-          <LayoutGrid /> Theme
-        </Button>
+        <div className="flex items-center gap-2">
+          <Link to="/dashboard">
+            <Button className="bg-teal-600 text-white hover:bg-teal rounded">
+              <Home />
+            </Button>
+          </Link>
+          <ResumeTheme />
+        </div>
         <div className="flex items-center gap-2">
           {activeIndex > 0 && (
             <Button

@@ -8,9 +8,11 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center h-14 border-b border-teal-200 shadow-sm">
-      <h1 className="ml-8 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-orange-600">
-        Resumify
-      </h1>
+      <Link to={"/"}>
+        <h1 className="ml-8 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-orange-600">
+          Resumify
+        </h1>
+      </Link>
 
       {isSignedIn ? (
         <div className="flex items-center mr-8 gap-4">
