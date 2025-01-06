@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ResumeForm from "../resume/ResumeForm";
 import ResumePreview from "../resume/ResumePreview";
-import { ResumeProvider, useResume } from "@/context/ResumeContext";
+import { useResume } from "@/context/ResumeContext";
 import ApiService from "@/service/ApiService";
 import { useParams } from "react-router-dom";
-import dummy from "@/data/dummy";
 
 const EditResume = () => {
   const [isLoading, setIsLoading] = useState(false);
