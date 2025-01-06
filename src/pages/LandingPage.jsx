@@ -1,7 +1,7 @@
 import Header from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
 
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, useUser } from "@clerk/clerk-react";
 import React from "react";
 import {
   Dialog,
@@ -14,19 +14,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, CheckCircle, FileText, Zap } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import FeatureCard from "@/components/landingpage/FeatureCard";
 import StepCard from "@/components/landingpage/StepCard";
 import Footer from "@/components/common/Footer";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
+  const { user, isSignedIn } = useUser();
+
   return (
     <div>
       <Header />
@@ -43,13 +38,24 @@ const LandingPage = () => {
               </p>
             </div>
             <div className="space-x-4">
-              <Button
-                className="bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600"
-                onClick={() => router.push("/dashboard")}
-              >
-                Get Started
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              {isSignedIn ? (
+                <Link to={"/dashboard"}>
+                  <Button className="bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600">
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link to={"/auth/sign-in"}>
+                  <Button
+                    className="bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600"
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    Get Started
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              )}
+
               <Button
                 variant="outline"
                 className="border-teal-600 text-teal-600 hover:bg-teal-50 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-950"
@@ -133,10 +139,23 @@ const LandingPage = () => {
                 dream jobs with ResumeAI.
               </p>
             </div>
-            <Button className="bg-white text-teal-600 hover:bg-teal-50 dark:bg-teal-950 dark:text-teal-400 dark:hover:bg-teal-900">
-              Get Started Now
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            {isSignedIn ? (
+              <Link to={"/dashboard"}>
+                <Button className="bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600">
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Link to={"/auth/sign-in"}>
+                <Button
+                  className="bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600"
+                  onClick={() => router.push("/dashboard")}
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </section>

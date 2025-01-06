@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/formatDate";
 import { Calendar } from "lucide-react";
 import React from "react";
 
@@ -34,7 +35,7 @@ export const EducationPreview = ({ resumeInfo }) => {
                 <div className="flex items-center gap-1">
                   <Calendar size={12} />
                   <h2 className="text-sm text-slate-600">
-                    {edu?.startDate} - {edu?.endDate}
+                    {formatDate(edu?.startDate)} - {formatDate(edu?.endDate)}
                   </h2>
                 </div>
               </div>

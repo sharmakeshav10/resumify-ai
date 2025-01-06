@@ -27,7 +27,12 @@ import { chatSession } from "@/service/AiService";
 const PROMPT =
   "position titile: {positionTitle} , Depends on position title give me 5-7 bullet points for my experience in resume (Please do not add experince level and No JSON array) , give me result in HTML tags";
 
-const RichTextEditor = ({ onRichTextEditorChange, index, defaultValue }) => {
+const RichTextEditor = ({
+  onRichTextEditorChange,
+  index,
+  defaultValue,
+  enabledNext,
+}) => {
   const [value, setValue] = useState(defaultValue);
   const [isLoading, setIsLoading] = useState(false);
   const { resumeInfo, updateResume } = useResume();
@@ -70,24 +75,23 @@ const RichTextEditor = ({ onRichTextEditorChange, index, defaultValue }) => {
     <div>
       <div className="flex justify-between items-end mb-2">
         <Label className="text-xs">Work Summary</Label>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Button
-            variant="outline"
-            type="button"
-            onClick={aiGeneratedSummary}
-            className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
-          >
-            <Sparkles />
-            Summarize with AI
-          </Button>
-        )}
+
+        <Button
+          variant="outline"
+          disabled={isLoading}
+          type="button"
+          onClick={aiGeneratedSummary}
+          className="border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded"
+        >
+          {isLoading ? <Loader className="animate-spin" /> : <Sparkles />}
+          {isLoading ? "Summarizing" : "Summarize with AI"}
+        </Button>
       </div>
       <EditorProvider>
         <Editor
           value={value}
           onChange={(e) => {
+            enabledNext(false);
             setValue(e.target.value);
             onRichTextEditorChange(e);
           }}

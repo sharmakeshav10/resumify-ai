@@ -27,11 +27,13 @@ const Header = () => {
           <UserButton />
         </div>
       ) : (
-        <Link to={"/auth/sign-in"}>
-          <Button className=" bg-teal-600 text-white hover:bg-teal-700 rounded">
-            Get Started
-          </Button>
-        </Link>
+        <div className="mr-8">
+          <Link to={"/auth/sign-in"}>
+            <Button className=" bg-teal-600 text-white hover:bg-teal-700 rounded">
+              Get Started
+            </Button>
+          </Link>
+        </div>
       )}
     </header>
   );

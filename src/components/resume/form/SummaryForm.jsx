@@ -29,6 +29,7 @@ const SummaryForm = ({ enabledNext }) => {
   }, [summary]);
 
   const aiGeneratedSummary = async () => {
+    enabledNext(false);
     setIsLoading(true);
     try {
       const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
@@ -123,7 +124,7 @@ const SummaryForm = ({ enabledNext }) => {
               type="submit"
               className="bg-teal-600 text-white hover:bg-teal-700 focus:ring-4 focus:ring-teal-300"
             >
-              {isLoading ? <Loader /> : "Save"}
+              {isLoading ? <Loader className="animate-spin" /> : "Save"}
             </Button>
           </div>
         </form>

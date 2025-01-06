@@ -181,6 +181,7 @@ const ExperienceForm = ({ enabledNext }) => {
                 <div className="col-span-2">
                   <RichTextEditor
                     index={index}
+                    enabledNext={enabledNext}
                     defaultValue={exp?.workSummary}
                     onRichTextEditorChange={(e) =>
                       handleRichTextEditorChange(e, "workSummary", index)
@@ -218,7 +219,7 @@ const ExperienceForm = ({ enabledNext }) => {
               type="submit"
               className="bg-teal-600 text-white hover:bg-teal-700 focus:ring-4 focus:ring-teal-300"
             >
-              {isLoading ? <Loader /> : "Save"}
+              {isLoading ? <Loader className="animate-spin" /> : "Save"}
             </Button>
           </div>
         </div>

@@ -154,7 +154,7 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
             type="submit"
             className="bg-teal-600 text-white hover:bg-teal-700 focus:ring-4 focus:ring-teal-300"
           >
-            {isLoading ? <Loader /> : "Save"}
+            {isLoading ? <Loader className="animate-spin" /> : "Save"}
           </Button>
         </div>
       </form>

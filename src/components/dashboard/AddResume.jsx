@@ -88,7 +88,7 @@ const AddResume = () => {
               onClick={createResume}
               className="bg-teal-600 text-white hover:bg-teal-700 mr-2"
             >
-              {isLoading ? <Loader /> : "Create"}
+              {isLoading ? <Loader className="animate-spin" /> : "Create"}
             </Button>
             <Button variant="outline" onClick={() => setOpenDialog(false)}>
               Cancel

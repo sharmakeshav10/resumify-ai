@@ -30,7 +30,9 @@ const ResumePreview = () => {
           <SkillsPreview resumeInfo={resumeInfo} />
         </>
       ) : (
-        "No resume data"
+        <div className="flex items-center justify-center h-full text-slate-500">
+          <h2>Fetching your data...</h2>
+        </div>
       )}
     </div>
   );
