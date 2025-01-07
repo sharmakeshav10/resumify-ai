@@ -43,7 +43,6 @@ const ResumeCard = ({ resume, refreshResumeList }) => {
         setIsLoading(false);
       }
     } catch (e) {
-      console.log("Resume couldn't be deleted: ", e);
       setIsLoading(false);
     }
   };

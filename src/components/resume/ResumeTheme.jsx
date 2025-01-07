@@ -56,7 +56,6 @@ const ResumeTheme = () => {
 
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log("THEMECOLOR ", response);
         toast({
           variant: "success",
           description: "Theme updated successfully!",

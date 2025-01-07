@@ -26,7 +26,6 @@ const AddResume = () => {
   const createResume = async (e) => {
     setIsLoading(true);
     const resumeId = crypto.randomUUID();
-    console.log(resumeTitle, resumeId);
 
     const data = {
       data: {
@@ -39,13 +38,12 @@ const AddResume = () => {
 
     try {
       const response = await ApiService.CreateNewResume(data);
-      console.log(response.data.data.documentId);
+
       if (response) {
         setIsLoading(false);
         navigate(`/dashboard/resume/${response.data.data.documentId}/edit`);
       }
     } catch (e) {
-      console.log("Cannot create resume due to: ", e);
       setIsLoading(false);
     }
   };

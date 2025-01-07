@@ -55,7 +55,6 @@ const RichTextEditor = ({
         resumeInfo?.experience[index]?.title
       );
       const result = await chatSession.sendMessage(prompt);
-      console.log("AI Response Text: ", result.response.text());
       const resp = result.response.text();
       const cleanedResponse = resp
         .replace(/[\{\}"]/g, "") // Remove curly braces and quotes
@@ -66,7 +65,6 @@ const RichTextEditor = ({
       setValue(cleanedResponse);
       setIsLoading(false);
     } catch (e) {
-      console.log("AI couldnt generate summary due to: ", e);
       setIsLoading(false);
     }
   };

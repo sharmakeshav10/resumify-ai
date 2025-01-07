@@ -8,7 +8,6 @@ import SkillsPreview from "./preview/SkillsPreview";
 
 const ResumePreview = () => {
   const { resumeInfo } = useResume();
-  console.log("PREVIEW: ", resumeInfo);
 
   return (
     <div className="h-full border shadow-lg p-14">

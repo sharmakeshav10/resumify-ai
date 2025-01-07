@@ -68,7 +68,6 @@ const EducationForm = ({ enabledNext }) => {
         });
       }
     } catch (e) {
-      console.log("Could not update education:", e);
       setIsLoading(false);
     }
   };

@@ -27,11 +27,9 @@ const SkillsForm = ({ enabledNext }) => {
     enabledNext(false);
     const newEntries = [...skillsList];
     const { name, value } = e.target;
-    console.log(e.target.value);
 
     newEntries[index][name] = value;
     setSkillsList(newEntries);
-    console.log("SKILLSLIST", newEntries);
   };
 
   const addNewSkills = () => {
@@ -65,7 +63,6 @@ const SkillsForm = ({ enabledNext }) => {
         });
       }
     } catch (e) {
-      console.log("Could not update skills:", e);
       setIsLoading(false);
     }
   };

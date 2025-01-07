@@ -36,23 +36,19 @@ const SummaryForm = ({ enabledNext }) => {
       const result = await chatSession.sendMessage(PROMPT);
 
       const responseText = result.response.text();
-      console.log("AI Response Text: ", responseText);
 
       // Parse the response and access the 'summaries' array
       const parsedResponse = JSON.parse(responseText);
-      console.log("Parsed AI Response: ", parsedResponse);
 
       setAiSummary(parsedResponse);
       setIsLoading(false);
     } catch (e) {
-      console.log("AI couldn't generate summary due to: ", e);
       setIsLoading(false);
     }
   };
 
   const handleSummaryChange = (e) => {
     enabledNext(false);
-    console.log(e.target.value);
 
     setSummary(e.target.value);
 
@@ -72,11 +68,8 @@ const SummaryForm = ({ enabledNext }) => {
         },
       };
 
-      console.log("DATAAAAA ", data);
-
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log(response);
         enabledNext(true);
         setIsLoading(false);
         toast({

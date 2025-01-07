@@ -69,11 +69,8 @@ const ExperienceForm = ({ enabledNext }) => {
         },
       };
 
-      console.log("Saving data: ", data);
-
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log("Experience saved successfully:", response);
         enabledNext(true);
         setIsLoading(false);
         toast({
@@ -88,7 +85,6 @@ const ExperienceForm = ({ enabledNext }) => {
   };
 
   useEffect(() => {
-    // console.log(experienceList);
     if (resumeInfo && resumeInfo?.experience) {
       updateResume({
         ...resumeInfo,

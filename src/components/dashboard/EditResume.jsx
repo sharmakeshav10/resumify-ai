@@ -20,7 +20,6 @@ const EditResume = () => {
       const response = await ApiService.getResumeInfoById(resumeId);
 
       if (response) {
-        console.log("Edited resume", response.data.data);
         updateResume(response.data.data);
         setIsLoading(false);
       }

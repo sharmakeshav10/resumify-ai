@@ -50,7 +50,6 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
 
       const response = await ApiService.updateResumeDetails(data, resumeId);
       if (response) {
-        console.log(response);
         enabledNext(true);
         setIsLoading(false);
         toast({
@@ -59,8 +58,6 @@ export const PersonalDetailsForm = ({ enabledNext }) => {
         });
       }
     } catch (e) {
-      console.log("Could not update the resume:", e);
-
       setIsLoading(false);
     }
   };

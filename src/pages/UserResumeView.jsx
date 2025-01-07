@@ -13,7 +13,6 @@ const UserResumeView = () => {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const { resumeInfo, updateResume } = useResume();
-  console.log(resumeId);
 
   useEffect(() => {
     getResumeInfo();
@@ -21,7 +20,6 @@ const UserResumeView = () => {
 
   const handleDownload = () => {
     const element = document.getElementById("download");
-    console.log("elem ", element);
 
     const options = {
       margin: 10,
@@ -36,18 +34,14 @@ const UserResumeView = () => {
   };
 
   const getResumeInfo = async () => {
-    console.log("inside resume view");
-
     setIsLoading(true);
     try {
       const response = await ApiService.getResumeInfoById(resumeId);
       if (response) {
-        console.log(response.data.data);
         updateResume(response?.data?.data);
         setIsLoading(false);
       }
     } catch (e) {
-      console.log("Couldnt fetch resume preview: ", e);
       setIsLoading(false);
     }
   };

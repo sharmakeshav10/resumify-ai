@@ -14,13 +14,12 @@ const Dashboard = () => {
   // Function to fetch user resumes
   const getResumeList = async () => {
     setIsLoading(true);
-    setHasError(false); // Reset error state before making a request
+    setHasError(false);
     try {
       const response = await ApiService.getUsersResumes(
         user?.primaryEmailAddress?.emailAddress
       );
-      console.log("Resume list", response.data.data);
-      setResumeList(response?.data?.data || []); // Safely set data to avoid undefined issues
+      setResumeList(response?.data?.data || []);
     } catch (e) {
       setHasError(true); // Set error state on failure
       console.error("Error fetching resumes:", e);
